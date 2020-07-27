@@ -27,6 +27,12 @@ function start() {
                     start();
                 });
                 break;
+            case '2':
+                console.log("Ajouter un client");
+                
+                    // reaffichage du menu 
+                    start();
+                break;
             case '99':
                 console.log("Adios Amigos");
                 rl.close();
