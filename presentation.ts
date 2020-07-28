@@ -1,17 +1,23 @@
-const readline = require('readline');
-const service = require('./service.js')
+//const readline = require('readline');
+//const service = require('./service.js')
+
+import readline from 'readline';
+import {Service} from './service';
+import {Client} from './domain';
 
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
 
+const service = new Service();
+
 function menu() {
     console.log('1. Lister les clients');
     console.log('99. Sortir');
 }
 
-function start() {
+export function start() {
 
     menu();
 
@@ -21,11 +27,11 @@ function start() {
             case '1':
                 console.log(">>Liste des clients");
                 // affichage du body qui contient les clients
-                service.getClients((client) => {
-                    console.log(client);
-                    // reaffichage du menu 
+                service.listerClients().then(clients => {
+                    afficherClients(clients);
                     start();
-                });
+                })
+                    .catch(err => console.log('Erreur', err));
                 break;
             case '2':
                 console.log("Ajouter un client");
@@ -42,4 +48,8 @@ function start() {
 
 }
 
-exports.start = start;
+function afficherClients(clients:Client[]) {
+    clients.forEach( (c:Client) => console.log(c.nom, c.prenoms));
+}
+
+//exports.start = start;
